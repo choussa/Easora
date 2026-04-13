@@ -73,47 +73,45 @@ export function PreviewPanel() {
         </div>
       </div>
 
-      {/* Content area — white paper background so Typst black-on-white SVG is always visible */}
-      <div ref={containerRef} className="flex-1 overflow-auto bg-[#1e293b] p-4">
-        {!workerReady ? (
-          /* WASM still booting */
-          <div className="flex h-full flex-col items-center justify-center gap-3">
-            <div className="h-10 w-10 animate-spin rounded-full border-2 border-[#334155] border-t-[#818cf8]" />
-            <p className="text-sm font-medium text-[#94a3b8]">Loading Typst engine…</p>
-            <p className="text-xs text-[#475569]">Downloading WASM + fonts (~30 MB, once only)</p>
-          </div>
-        ) : hasErrors ? (
-          /* Compilation errors */
-          <div className="flex h-full items-start justify-center pt-12">
-            <div className="max-w-lg rounded-xl border border-red-500/30 bg-red-500/10 p-6">
-              <p className="text-sm font-semibold text-red-400">Compilation Error</p>
-              {compilationErrors.map((err, i) => (
-                <pre key={i} className="mt-2 whitespace-pre-wrap text-xs text-red-300/80">{err}</pre>
-              ))}
+        {/* Content area — white paper background so Typst black-on-white SVG is always visible */}
+        <div ref={containerRef} className="flex-1 overflow-auto bg-[#1e293b] p-4 text-center">
+          {!workerReady ? (
+            /* WASM still booting */
+            <div className="flex h-full flex-col items-center justify-center gap-3">
+              <div className="h-10 w-10 animate-spin rounded-full border-2 border-[#334155] border-t-[#818cf8]" />
+              <p className="text-sm font-medium text-[#94a3b8]">Loading Typst engine…</p>
+              <p className="text-xs text-[#475569]">Downloading WASM + fonts (~30 MB, once only)</p>
             </div>
-          </div>
-        ) : svgOutput ? (
-          /* Rendered Typst SVG — white paper, scale transform */
-          <div
-            className="mx-auto origin-top rounded shadow-2xl transition-transform duration-150"
-            style={{
-              transform: `scale(${previewScale})`,
-              transformOrigin: 'top center',
-              backgroundColor: '#ffffff',
-              display: 'inline-block',
-            }}
-            dangerouslySetInnerHTML={{ __html: svgOutput }}
-          />
-        ) : (
-          /* Waiting for first compile result */
-          <div className="flex h-full items-center justify-center">
-            <div className="text-center">
-              <div className="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-2 border-[#334155] border-t-[#818cf8]" />
-              <p className="text-sm text-[#64748b]">Compiling…</p>
+          ) : hasErrors ? (
+            /* Compilation errors */
+            <div className="flex h-full items-start justify-center pt-12">
+              <div className="max-w-lg rounded-xl border border-red-500/30 bg-red-500/10 p-6">
+                <p className="text-sm font-semibold text-red-400">Compilation Error</p>
+                {compilationErrors.map((err, i) => (
+                  <pre key={i} className="mt-2 whitespace-pre-wrap text-xs text-red-300/80">{err}</pre>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          ) : svgOutput ? (
+            /* Rendered Typst SVG — white paper, explicitly using CSS zoom for scrollable dimensions */
+            <div
+              className="rounded shadow-2xl transition-all duration-150 inline-block text-left"
+              style={{
+                zoom: previewScale,
+                backgroundColor: '#ffffff',
+              } as any}
+              dangerouslySetInnerHTML={{ __html: svgOutput }}
+            />
+          ) : (
+            /* Waiting for first compile result */
+            <div className="flex h-full items-center justify-center">
+              <div className="text-center">
+                <div className="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-2 border-[#334155] border-t-[#818cf8]" />
+                <p className="text-sm text-[#64748b]">Compiling…</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
