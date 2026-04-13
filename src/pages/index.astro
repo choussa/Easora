@@ -9,7 +9,7 @@ import { ArrowRight, Code2, Paintbrush, Zap } from 'lucide-react';
 		<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 			<div class="container mx-auto flex h-14 items-center px-4 md:px-6">
 				<div class="mr-4 flex">
-					<a class="flex items-center space-x-2" href="/">
+					<a class="flex items-center space-x-2" href={import.meta.env.BASE_URL}>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="m14 18-4-4 4-4"/><path d="m10 6 4 4-4 4"/></svg>
 						<span class="font-bold sm:inline-block">Stitch UI</span>
 					</a>
@@ -19,8 +19,8 @@ import { ArrowRight, Code2, Paintbrush, Zap } from 'lucide-react';
 						<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="#features">Features</a>
 					</nav>
 					<div class="flex items-center space-x-2">
-						<a href="/login" class="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground/80">Login</a>
-						<a href="/register">
+						<a href={`${import.meta.env.BASE_URL}login`} class="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground/80">Login</a>
+						<a href={`${import.meta.env.BASE_URL}register`}>
 							<Button size="sm">Get Started</Button>
 						</a>
 					</div>
@@ -44,7 +44,7 @@ import { ArrowRight, Code2, Paintbrush, Zap } from 'lucide-react';
 						A lightweight, local-first single-player IDE for Typst. Write, preview, and build your documents instantly with WebAssembly. Zero server limits.
 					</p>
 					<div class="space-x-4">
-						<a href="/editor/demo">
+						<a href={`${import.meta.env.BASE_URL}editor/demo`}>
 							<Button size="lg" className="h-12 px-8">
 								Try Demo Editor <ArrowRight className="ml-2 h-4 w-4" />
 							</Button>

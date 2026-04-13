@@ -25,13 +25,13 @@ async function initTypst() {
     // Point compiler at local WASM binary
     $typst.setCompilerInitOptions({
       getModule: () =>
-        new URL('/wasm/typst_ts_web_compiler_bg.wasm', self.location.origin).href,
+        new URL(`${import.meta.env.BASE_URL}wasm/typst_ts_web_compiler_bg.wasm`, self.location.origin).href,
     });
 
     // Point renderer at local WASM binary
     $typst.setRendererInitOptions({
       getModule: () =>
-        new URL('/wasm/typst_ts_renderer_bg.wasm', self.location.origin).href,
+        new URL(`${import.meta.env.BASE_URL}wasm/typst_ts_renderer_bg.wasm`, self.location.origin).href,
     });
 
     // Load default font assets (fetched from typst CDN automatically)
