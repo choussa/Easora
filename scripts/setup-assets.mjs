@@ -25,7 +25,7 @@ const wasmFiles = [
 // Fonts to download for offline compilation
 const fontsToDownload = [
   {
-    url: 'https://github.com/google/fonts/raw/main/ofl/roboto/Roboto-Regular.ttf',
+    url: 'https://raw.githubusercontent.com/googlefonts/roboto/main/src/hinted/Roboto-Regular.ttf',
     dest: 'Roboto-Regular.ttf'
   }
 ];
