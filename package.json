@@ -1,15 +1,16 @@
 {
-  "name": "proud-phase",
+  "name": "stitch-ui",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/setup-assets.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "setup": "node scripts/setup-assets.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",

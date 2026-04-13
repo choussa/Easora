@@ -34,10 +34,9 @@ export function EditorLayout() {
             <CodeEditor />
           </Panel>
 
-          <Separator className="group relative w-1 bg-[#1e293b] transition-colors hover:bg-[#818cf8]">
-            <div className="absolute inset-y-0 -left-1 -right-1 z-10" />
-            <div className="absolute left-1/2 top-1/2 h-8 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#334155] transition-colors group-hover:bg-[#818cf8]" />
-          </Separator>
+          <Separator
+            className="w-[3px] cursor-col-resize bg-[#1e293b] transition-colors duration-150 hover:bg-[#818cf8] focus-visible:outline-none"
+          />
 
           <Panel defaultSize={50} minSize={25}>
             <PreviewPanel />
