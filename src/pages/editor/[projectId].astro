@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return [
+		{ params: { projectId: 'demo' } },
+	];
+}
+
+const { projectId } = Astro.params;
+---
+
+<BaseLayout title="Editor — Stitch UI" description="Typst document editor with live preview">
+	<style is:global>
+		/* Ensure the editor fills the viewport completely */
+		html, body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			height: 100%;
+		}
+	</style>
+
+	<div id="editor-root" class="h-screen w-screen">
+		<!-- React island: full editor layout -->
+	</div>
+</BaseLayout>
+
+<script>
+	import { createElement } from 'react';
+	import { createRoot } from 'react-dom/client';
+	import { EditorLayout } from '@/components/editor/EditorLayout';
+
+	const container = document.getElementById('editor-root');
+	if (container) {
+		const root = createRoot(container);
+		root.render(createElement(EditorLayout));
+	}
+</script>
