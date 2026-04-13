@@ -1,103 +1,173 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Code2, Paintbrush, Zap } from 'lucide-react';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Code2, Paintbrush, Zap } from "lucide-react";
 ---
 
 <BaseLayout title="Stitch UI - Modern Typst IDE">
-	<div class="relative flex min-h-screen flex-col">
-		<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<div class="container mx-auto flex h-14 items-center px-4 md:px-6">
-				<div class="mr-4 flex">
-					<a class="flex items-center space-x-2" href={import.meta.env.BASE_URL}>
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-primary"><path d="m14 18-4-4 4-4"/><path d="m10 6 4 4-4 4"/></svg>
-						<span class="font-bold sm:inline-block">Stitch UI</span>
-					</a>
-				</div>
-				<div class="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-					<nav class="flex items-center space-x-6 text-sm font-medium">
-						<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="#features">Features</a>
-					</nav>
-					<div class="flex items-center space-x-2">
-						<a href={`${import.meta.env.BASE_URL}login`} class="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground/80">Login</a>
-						<a href={`${import.meta.env.BASE_URL}register`}>
-							<Button size="sm">Get Started</Button>
-						</a>
-					</div>
-				</div>
-			</div>
-		</header>
+  <div class="relative flex min-h-screen flex-col">
+    <header
+      class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <div class="container mx-auto flex h-14 items-center px-4 md:px-6">
+        <div class="mr-4 flex">
+          <a
+            class="flex items-center space-x-2"
+            href={import.meta.env.BASE_URL}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-6 w-6 text-primary"
+              ><path d="m14 18-4-4 4-4"></path><path d="m10 6 4 4-4 4"
+              ></path></svg
+            >
+            <span class="font-bold sm:inline-block">Easora</span>
+          </a>
+        </div>
+        <div
+          class="flex flex-1 items-center justify-between space-x-2 md:justify-end"
+        >
+          <nav class="flex items-center space-x-6 text-sm font-medium">
+            <a
+              class="transition-colors hover:text-foreground/80 text-foreground/60"
+              href="#features">Features</a
+            >
+          </nav>
+          <div class="flex items-center space-x-2">
+            <a
+              href={`${import.meta.env.BASE_URL}login`}
+              class="text-sm font-medium text-foreground/60 transition-colors hover:text-foreground/80"
+              >Login</a
+            >
+            <a href={`${import.meta.env.BASE_URL}register`}>
+              <Button size="sm">Get Started</Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
 
-		<main class="flex-1">
-			<section class="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
-				<div class="container mx-auto flex max-w-[64rem] flex-col items-center gap-4 text-center px-4 md:px-6">
-					<a href="https://typst.app" target="_blank" class="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium" rel="noreferrer">
-						Powered by Typst.ts
-					</a>
-					<h1 class="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-						Typesetting in your browser,{" "}
-						<span class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent">
-							made effortless.
-						</span>
-					</h1>
-					<p class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-						A lightweight, local-first single-player IDE for Typst. Write, preview, and build your documents instantly with WebAssembly. Zero server limits.
-					</p>
-					<div class="space-x-4">
-						<a href={`${import.meta.env.BASE_URL}editor/demo`}>
-							<Button size="lg" className="h-12 px-8">
-								Try Demo Editor <ArrowRight className="ml-2 h-4 w-4" />
-							</Button>
-						</a>
-					</div>
-				</div>
-			</section>
+    <main class="flex-1">
+      <section class="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
+        <div
+          class="container mx-auto flex max-w-[64rem] flex-col items-center gap-4 text-center px-4 md:px-6"
+        >
+          <a
+            href="https://typst.app"
+            target="_blank"
+            class="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium"
+            rel="noreferrer"
+          >
+            Powered by Typst.ts
+          </a>
+          <h1
+            class="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
+          >
+            Typesetting in your browser,{" "}
+            <span
+              class="bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent"
+            >
+              made effortless.
+            </span>
+          </h1>
+          <p
+            class="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8"
+          >
+            A lightweight, local-first single-player IDE for Typst. Write,
+            preview, and build your documents instantly with WebAssembly. Zero
+            server limits.
+          </p>
+          <div class="space-x-4">
+            <a href={`${import.meta.env.BASE_URL}editor/demo`}>
+              <Button size="lg" className="h-12 px-8">
+                Try Demo Editor <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
 
-			<section id="features" class="container mx-auto space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24 px-4 md:px-6">
-				<div class="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-					<h2 class="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-6xl">Features</h2>
-					<p class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-						Built for speed, aesthetics, and privacy. Everything you need to craft stunning documents.
-					</p>
-				</div>
-				<div class="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-					<div class="relative overflow-hidden rounded-lg border bg-background p-2">
-						<div class="flex h-[180px] flex-col justify-between rounded-md p-6">
-							<Zap className="h-12 w-12 text-primary" />
-							<div class="space-y-2">
-								<h3 class="font-bold">Instant Preview</h3>
-								<p class="text-sm text-muted-foreground">WASM-powered rendering compiles your document as you type.</p>
-							</div>
-						</div>
-					</div>
-					<div class="relative overflow-hidden rounded-lg border bg-background p-2">
-						<div class="flex h-[180px] flex-col justify-between rounded-md p-6">
-							<Code2 className="h-12 w-12 text-primary" />
-							<div class="space-y-2">
-								<h3 class="font-bold">Rich Editor</h3>
-								<p class="text-sm text-muted-foreground">CodeMirror 6 integration with Typst syntax highlighting.</p>
-							</div>
-						</div>
-					</div>
-					<div class="relative overflow-hidden rounded-lg border bg-background p-2">
-						<div class="flex h-[180px] flex-col justify-between rounded-md p-6">
-							<Paintbrush className="h-12 w-12 text-primary" />
-							<div class="space-y-2">
-								<h3 class="font-bold">Sleek Design</h3>
-								<p class="text-sm text-muted-foreground">Beautiful typography and dark mode by default.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+      <section
+        id="features"
+        class="container mx-auto space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24 px-4 md:px-6"
+      >
+        <div
+          class="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center"
+        >
+          <h2
+            class="font-heading text-3xl font-bold leading-[1.1] sm:text-3xl md:text-6xl"
+          >
+            Features
+          </h2>
+          <p
+            class="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7"
+          >
+            Built for speed, aesthetics, and privacy. Everything you need to
+            craft stunning documents.
+          </p>
+        </div>
+        <div
+          class="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3"
+        >
+          <div
+            class="relative overflow-hidden rounded-lg border bg-background p-2"
+          >
+            <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Zap className="h-12 w-12 text-primary" />
+              <div class="space-y-2">
+                <h3 class="font-bold">Instant Preview</h3>
+                <p class="text-sm text-muted-foreground">
+                  WASM-powered rendering compiles your document as you type.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden rounded-lg border bg-background p-2"
+          >
+            <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Code2 className="h-12 w-12 text-primary" />
+              <div class="space-y-2">
+                <h3 class="font-bold">Rich Editor</h3>
+                <p class="text-sm text-muted-foreground">
+                  CodeMirror 6 integration with Typst syntax highlighting.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="relative overflow-hidden rounded-lg border bg-background p-2"
+          >
+            <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Paintbrush className="h-12 w-12 text-primary" />
+              <div class="space-y-2">
+                <h3 class="font-bold">Sleek Design</h3>
+                <p class="text-sm text-muted-foreground">
+                  Beautiful typography and dark mode by default.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-		<footer class="border-t py-6 md:py-0">
-			<div class="container mx-auto flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row px-4 md:px-6">
-				<p class="text-center text-sm leading-loose text-muted-foreground md:text-left">
-					Built by Oussama using Astro, React, and Typst.
-				</p>
-			</div>
-		</footer>
-	</div>
+    <footer class="border-t py-6 md:py-0">
+      <div
+        class="container mx-auto flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row px-4 md:px-6"
+      >
+        <p
+          class="text-center text-sm leading-loose text-muted-foreground md:text-left"
+        >
+          Built by Oussama using Astro, React, and Typst.
+        </p>
+      </div>
+    </footer>
+  </div>
 </BaseLayout>

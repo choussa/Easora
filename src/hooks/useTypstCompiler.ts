@@ -3,23 +3,40 @@ import { useEditorStore } from '@/stores/editor-store';
 import { useDebounce } from './useDebounce';
 
 /**
- * React hook that manages the Typst Web Worker lifecycle.
+ * React hook managing the Typst Web Worker lifecycle.
  *
- * - Spawns the worker on mount
- * - Sends debounced source text for compilation
- * - Receives SVG / error results and pushes them into the Zustand store
- * - Provides a `compilePdf()` function for PDF export
+ * Boot sequence:
+ *  1. Worker spawned
+ *  2. Hook sends { type:'init', baseUrl } — worker starts WASM + font loading
+ *  3. Worker replies { type:'ready' } — first queued compile is flushed
+ *  4. Subsequent compiles are debounced at 600 ms
  */
 export function useTypstCompiler() {
   const workerRef = useRef<Worker | null>(null);
+  const workerReadyRef = useRef(false);
+  const pendingRef = useRef<string | null>(null);   // compile queued before ready
   const idRef = useRef(0);
+
   const source = useEditorStore((s) => s.source);
   const setCompilationResult = useEditorStore((s) => s.setCompilationResult);
   const setIsCompiling = useEditorStore((s) => s.setIsCompiling);
+  const setWorkerReady = useEditorStore((s) => s.setWorkerReady);
 
-  const debouncedSource = useDebounce(source, 300);
+  const debouncedSource = useDebounce(source, 600);
 
-  // Spawn worker on mount
+  // Internal: post a compile or queue it if the worker isn't ready yet
+  const sendCompile = useCallback((src: string) => {
+    if (!workerRef.current) return;
+    if (!workerReadyRef.current) {
+      pendingRef.current = src;         // will be sent when 'ready' arrives
+      return;
+    }
+    const id = ++idRef.current;
+    setIsCompiling(true);
+    workerRef.current.postMessage({ type: 'compile', source: src, id });
+  }, [setIsCompiling]);
+
+  // Spawn worker once on mount
   useEffect(() => {
     const worker = new Worker(
       new URL('../workers/typst-compiler.worker.ts', import.meta.url),
@@ -29,12 +46,29 @@ export function useTypstCompiler() {
     worker.onmessage = (e) => {
       const data = e.data;
 
+      if (data.type === 'ready') {
+        workerReadyRef.current = true;
+        setWorkerReady(true);
+        // Flush any compile that arrived before WASM was ready
+        if (pendingRef.current !== null) {
+          const pending = pendingRef.current;
+          pendingRef.current = null;
+          const id = ++idRef.current;
+          setIsCompiling(true);
+          worker.postMessage({ type: 'compile', source: pending, id });
+        }
+      }
+
+      if (data.type === 'init-error') {
+        console.error('[typst] Worker init failed:', data.error);
+        setWorkerReady(false);
+      }
+
       if (data.type === 'result') {
-        setCompilationResult(data.svg, data.errors);
+        setCompilationResult(data.svg, data.errors ?? []);
       }
 
       if (data.type === 'pdf') {
-        // Trigger download
         const blob = new Blob([data.pdf], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -49,35 +83,38 @@ export function useTypstCompiler() {
       }
     };
 
+    worker.onerror = (err) => {
+      console.error('[typst] Worker uncaught error:', err.message);
+    };
+
     workerRef.current = worker;
+
+    // Send init with the base URL so the worker knows where to load WASMs from.
+    // import.meta.env.BASE_URL is replaced at build time by Vite / Astro.
+    worker.postMessage({ type: 'init', baseUrl: import.meta.env.BASE_URL ?? '/' });
 
     return () => {
       worker.terminate();
       workerRef.current = null;
+      workerReadyRef.current = false;
     };
-  }, [setCompilationResult]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Compile when source changes (debounced)
+  // Re-compile whenever debounced source changes
   useEffect(() => {
-    if (!workerRef.current || !debouncedSource) return;
-
-    const id = ++idRef.current;
-    setIsCompiling(true);
-    workerRef.current.postMessage({ type: 'compile', source: debouncedSource, id });
-  }, [debouncedSource, setIsCompiling]);
+    if (!debouncedSource) return;
+    sendCompile(debouncedSource);
+  }, [debouncedSource, sendCompile]);
 
   const compilePdf = useCallback(() => {
-    if (!workerRef.current) return;
-    const id = ++idRef.current;
-    workerRef.current.postMessage({ type: 'pdf', source, id });
+    if (!workerRef.current || !workerReadyRef.current) return;
+    workerRef.current.postMessage({ type: 'pdf', source, id: ++idRef.current });
   }, [source]);
 
   const forceCompile = useCallback(() => {
-    if (!workerRef.current) return;
-    const id = ++idRef.current;
-    setIsCompiling(true);
-    workerRef.current.postMessage({ type: 'compile', source, id });
-  }, [source, setIsCompiling]);
+    sendCompile(source);
+  }, [source, sendCompile]);
 
   return { compilePdf, forceCompile };
 }

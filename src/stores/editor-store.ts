@@ -16,8 +16,10 @@ interface EditorState {
   svgOutput: string | null;
   compilationErrors: string[];
   isCompiling: boolean;
+  workerReady: boolean;
   setCompilationResult: (svg: string | null, errors: string[]) => void;
   setIsCompiling: (v: boolean) => void;
+  setWorkerReady: (v: boolean) => void;
 
   // Files
   files: FileEntry[];
@@ -69,9 +71,11 @@ export const useEditorStore = create<EditorState>((set) => ({
   svgOutput: null,
   compilationErrors: [],
   isCompiling: false,
+  workerReady: false,
   setCompilationResult: (svgOutput, compilationErrors) =>
     set({ svgOutput, compilationErrors, isCompiling: false }),
   setIsCompiling: (isCompiling) => set({ isCompiling }),
+  setWorkerReady: (workerReady) => set({ workerReady }),
 
   // Files
   files: [
