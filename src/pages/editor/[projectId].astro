@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { EditorLayout } from '@/components/editor/EditorLayout';
 
 export function getStaticPaths() {
 	return [
@@ -22,18 +23,6 @@ const { projectId } = Astro.params;
 	</style>
 
 	<div id="editor-root" class="h-screen w-screen">
-		<!-- React island: full editor layout -->
+		<EditorLayout client:only="react" />
 	</div>
 </BaseLayout>
-
-<script>
-	import { createElement } from 'react';
-	import { createRoot } from 'react-dom/client';
-	import { EditorLayout } from '@/components/editor/EditorLayout';
-
-	const container = document.getElementById('editor-root');
-	if (container) {
-		const root = createRoot(container);
-		root.render(createElement(EditorLayout));
-	}
-</script>

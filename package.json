@@ -45,5 +45,9 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.9.3",
     "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@myriaddreamin/typst-ts-renderer": "^0.7.0-rc2",
+    "@myriaddreamin/typst-ts-web-compiler": "^0.7.0-rc2"
   }
 }
