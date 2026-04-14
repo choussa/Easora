@@ -32,11 +32,23 @@ async function initTypst(baseUrl: string) {
     const origin = self.location.origin;
 
     $typst.setCompilerInitOptions({
-      getModule: () => `${origin}${base}wasm/typst_ts_web_compiler_bg.wasm`,
+      getModule: async () => {
+        const url = `${origin}${base}wasm/typst_ts_web_compiler_bg.wasm`;
+        console.info('[typst-worker] Fetching compiler WASM from:', url);
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to fetch compiler WASM from ${url} (status ${res.status})`);
+        return res; // typst accepts Response object for WebAssembly.instantiateStreaming
+      },
     });
 
     $typst.setRendererInitOptions({
-      getModule: () => `${origin}${base}wasm/typst_ts_renderer_bg.wasm`,
+      getModule: async () => {
+        const url = `${origin}${base}wasm/typst_ts_renderer_bg.wasm`;
+        console.info('[typst-worker] Fetching renderer WASM from:', url);
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to fetch renderer WASM from ${url} (status ${res.status})`);
+        return res;
+      },
     });
 
     // Fetch official Typst fonts from CDN (Linux Libertine, New Computer Modern, etc.)
